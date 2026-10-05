@@ -1,1 +1,16 @@
-
+name: PSP derle
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: pspdev/pspdev:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Derle
+        run: make
+      - name: Paketle
+        run: mkdir -p out/TurboKart3D && cp EBOOT.PBP out/TurboKart3D/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TurboKart3D
+          path: out
